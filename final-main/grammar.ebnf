@@ -1,0 +1,35 @@
+program                         = function_definition+;
+function_definition             = "fn" , identifier , "(" , [arguments] , ")" , "{", [{ statement | expression }], "}" ;
+arguments                       = expression , [{ "," , expression}] ;
+statement                       = ( variable_define | function_return ) , ";" ;
+variable_define                 = "let" , identifier, "=", expression;
+
+// Valid Conditional Expression:
+//      1: temp > 3
+//      2: x == true
+//      3: 1 + 2 > temp
+// Invalid Conditional Expression:
+//      1: true > false (cannot use '>' on boolean)
+//      2: true == 3 (cannot compare number and boolean)
+//      3: true + 2 != false (cannot add boolean and number)
+
+conditional_expression           = conditional , ("<" | ">" | "<=" | ">=" | "==" | "!="), conditional , [("==" | "!="), boolean];
+
+// Above, is my syntax for a conditional expression, it is a conditional, followed by one of the six operators, ending with a conditional
+// Below, is what I define as a conditional, math expression, bool, identifier and number
+
+conditional                     = math_expression | boolean | identifier | number ;
+
+
+
+function_return                 = "return" , expression ;                  
+expression                      = conditional_expression | math_expression | function_call | string | boolean | value ;
+function_call                   = identifier , "(" , [arguments] , ")" ;
+math_expression                 = value , { ("+" | "-" | "*" | "/" | "^") , value } ;
+value                           = number | identifier ;
+number                          = digit , [{digit}] ;
+boolean                         = "true" | "false" ;
+string                          = "\"" , {alnum | " "} , "\"" ;
+identifier                      = alnum , {alnum} ;
+alnum                           = ?alpha-numeric-character? ;
+digit                           = 0..9;

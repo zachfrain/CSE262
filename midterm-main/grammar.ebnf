@@ -1,0 +1,34 @@
+Notation:
+=           Definition
+,           Concatenation
+;           Termination
+|           Alternation
+{...}       Repetition (1 or more)
+[...]       Optional
+(...)       Grouping
+"..."       Terminal String
+(*...*)     Comment
+?...?       Special Sequence
+-           Exception
+
+while_loop                                  = "while", "(", condition, ")", "{", [{statement}], "}" ;
+statement                                   = (print_statement, ";") | (define, ";") | (single_math_expression, ";") ;
+condition                                   = expression, ("<=" | "<" | ">=" | ">" | "=="), expression ;
+define                                      = string_define | variable_define;
+print_statement                             = "System.out.println", "(", (expression | string), ")" ;
+string_define                               = "String", identifier, "=", string ;
+variable_define                             = primitive_type, identifier, "=", expression ;
+expression                                  = integer | identifier ;
+single_math_expression                      = identifier, ("++" | "+=" | "--" | "-="), [value] ;
+value                                       = integer | identifier;
+string                                      = "\"", {alphanumeric | " "}, "\"" ;
+boolean                                     = "true" | "false" ;
+integer                                     = nonzero_digit, [{digit}] ;
+primitive_type                              = "boolean" | "int" ;
+identifier                                  = letter, [{alphanumeric}] ;
+alphanumeric                                = letter | digit;
+letter                                      = ?alphabetic or equivalent character?;
+digit                                       = nonzero_digit | zero ;
+zero                                        = "0"
+nonzero_digit                               = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+whitespace                                  = space | tab | newline | carriage_return;
